@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,6 +19,8 @@ class _HomePageState extends State<HomePage> {
     CardInfoHome1(),
     CardInfoHome2(),
   ];
+
+  int currentIndex = 0;
 
   Widget header() {
     return Container(
@@ -113,7 +117,20 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Container indicator(int index) {
+    return Container(
+      width: currentIndex == index ? 18 : 5,
+      margin: EdgeInsets.symmetric(horizontal: 2),
+      height: 5,
+      decoration: BoxDecoration(
+        color: currentIndex == index ? whiteColor : whiteColor.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(4),
+      ),
+    );
+  }
+
   Widget cardInfo() {
+    int index = -1;
     return Column(
       children: [
         CarouselSlider(
@@ -123,10 +140,25 @@ class _HomePageState extends State<HomePage> {
                   ))
               .toList(),
           options: CarouselOptions(
-            viewportFraction: 1,
-            height: 333,
-            enableInfiniteScroll: false,
-          ),
+              viewportFraction: 1,
+              height: 333,
+              enableInfiniteScroll: false,
+              initialPage: 0,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  currentIndex = index;
+                });
+              }),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: cards.map((e) {
+            index += 1;
+            return indicator(index);
+          }).toList(),
         )
       ],
     );
