@@ -1,11 +1,14 @@
-import 'dart:ffi';
-
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:telkomsel/screens/home/components/card_info_home_1.dart';
 import 'package:telkomsel/screens/home/components/card_info_home_2.dart';
+import 'package:telkomsel/screens/home/components/recomened_card.dart';
+import 'package:telkomsel/screens/home/components/whats_new_card.dart';
 import 'package:telkomsel/themes.dart';
+
+import 'dart:ui';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -164,6 +167,111 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Column recomendForYou() {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+            left: 16,
+            top: 45,
+            right: 16,
+          ),
+          child: Row(
+            children: [
+              Text(
+                'Recomended for you',
+                style: nunitoExtraBoldText18.copyWith(color: primaryTextColor),
+              ),
+              Spacer(),
+              Text(
+                'See All',
+                style: regulerText12.copyWith(color: blueColor),
+              )
+            ],
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            children: [
+              RecomendedCard(
+                title: 'Kuota keterangan unli ...',
+                time: '29 Jun 2021 13:08:07',
+                price: 'Rp 4,200',
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              RecomendedCard(
+                title: 'Kuota keterangan bela ...',
+                time: '29 Jun 2021 13:05:07',
+                price: 'Rp 5,500',
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget whatsNew() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 16,
+            bottom: 14,
+          ),
+          child: Text(
+            'What`s New ?',
+            style: nunitoExtraBoldText18.copyWith(color: primaryTextColor),
+          ),
+        ),
+        SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              WhatsNewCard(
+                image: 'assets/images/video-subscription.png',
+                text: 'Package',
+                title: 'Video Digital Subsciption',
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              WhatsNewCard(
+                image: 'assets/images/poin-image.png',
+                text: 'Poin',
+                title: 'Undi-undi Hepi',
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget content() {
+    return Container(
+      margin: EdgeInsets.only(top: 20),
+      decoration: BoxDecoration(
+        color: whiteColor,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(24),
+        ),
+      ),
+      child: Column(
+        children: [
+          recomendForYou(),
+          whatsNew(),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,12 +284,24 @@ class _HomePageState extends State<HomePage> {
           colors: [redColor, redColor, yellowColor],
         ),
       ),
-      child: ListView(
-        children: [
-          header(),
-          cardInfo(),
-        ],
+      child: ScrollConfiguration(
+        behavior: MyBehaviour(),
+        child: ListView(
+          children: [
+            header(),
+            cardInfo(),
+            content(),
+          ],
+        ),
       ),
     ));
+  }
+}
+
+class MyBehaviour extends ScrollBehavior {
+  @override
+  Widget builViewportChrome(
+      BuildContext contextm, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }

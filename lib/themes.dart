@@ -51,6 +51,7 @@ TextStyle semiBoldText13 =
 
 // Bold Text
 TextStyle boldText13 = GoogleFonts.poppins(fontSize: 13, fontWeight: bold);
+TextStyle boldText14 = GoogleFonts.poppins(fontSize: 14, fontWeight: bold);
 TextStyle boldText15 = GoogleFonts.poppins(fontSize: 15, fontWeight: bold);
 
 // Extra Bold Text
@@ -58,5 +59,5 @@ TextStyle extraBoldText26 =
     GoogleFonts.poppins(fontSize: 26, fontWeight: extraBold);
 
 // Secondary text
-TextStyle extraBoldText18 =
+TextStyle nunitoExtraBoldText18 =
     GoogleFonts.nunito(fontSize: 18, fontWeight: extraBold);
